@@ -92,4 +92,28 @@ Prepare FDroid Priviledged Extension
 	
 If you skip this step, the priviledged extension will not accept your signed FDroid.
 
+Prepare vendor files
 
+	cd ..
+	git clone https://github.com/anestisb/android-prepare-vendor
+	cd android-prepare-vendor
+	mkdir out
+	./execute-all.sh -d marlin -b OPM4.171019.016.B1 -o out
+	cp -av out/marlin/opm4.171019.016.b1/vendor* ../aosp/
+	cd ../aosp
+	
+Note: on some setups, there might be some issues with android-prepare-vendor. You might need to make some changes to execute-all.sh lines 325-327 as follows:
+
+	  USE_DEBUGFS=false
+  	SYS_TOOLS+=("fusermount")
+  	_UMOUNT="fusermount -u"
+	
+Building
+
+	source script/aosp.sh
+	choosecombo release aosp_marlin user
+	make -j20 brillo_update_payload && make target-files-package -j24 && script/release.sh marlin
+	
+	
+	
+	
