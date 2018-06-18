@@ -8,3 +8,5 @@ export DISPLAY_BUILD_NUMBER=true
 export OFFICIAL_BUILD=true
 chrt -b -p 0 $$
 export PATH="$PWD/script/bin:$PATH"
+
+sed -i 's/<bool name="config_enableAutoPowerModes">false<\/bool>/<bool name="config_enableAutoPowerModes">true<\/bool>/g' frameworks/base/core/res/res/values/config.xml
