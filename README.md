@@ -78,3 +78,18 @@ At the moment kernel version for 'marlin' is 514a3ff917ea
 	mv arch/arm64/boot/Image.lz4-dtb ../device/google/marlin-kernel/
 	cd ..
 	
+Clone this repo
+
+	cd ..
+	git clone https://github.com/aospbuild/aospbuild
+	cp -av aospbuild/* aosp/
+	cd aosp
+	
+Prepare FDroid Priviledged Extension
+
+	fingerprint=`openssl x509 -noout -fingerprint -sha256 -inform pem -in keys/marlin/platform.x509.pem | cut -d'=' -f2 | sed 's/://g' | tr '[:upper:]' '[:lower:]'`
+	sed "s/SHA256_FINGERPRINT/$fingerprint/g" external/extras/FDroidPriviledged/java/org/fdroid/fdroid/privileged/ClientWhitelist.java
+	
+If you skip this step, the priviledged extension will not accept your signed FDroid.
+
+
