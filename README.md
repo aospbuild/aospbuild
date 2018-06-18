@@ -119,7 +119,7 @@ Building
 When finished, you will find both factory image and OTA update package in out/release-marlin-$BUILD_NUMBER .
 
 Installing
-- tar xvf marlin-factory-$BUILD_NUMBER.tar.gz
+- unzip marlin-factory-$BUILD_NUMBER.zip
 - cd marlin-opm4.171019.016.b1
 - reboot device in fastboot
 - fastboot flashing unlock (also fastboot flashing unlock_critical for Pixel 2 XL)
