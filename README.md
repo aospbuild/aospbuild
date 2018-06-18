@@ -88,7 +88,7 @@ Clone this repo
 Prepare FDroid Priviledged Extension
 
 	fingerprint=`openssl x509 -noout -fingerprint -sha256 -inform pem -in keys/marlin/platform.x509.pem | cut -d'=' -f2 | sed 's/://g' | tr '[:upper:]' '[:lower:]'`
-	sed "s/SHA256_FINGERPRINT/$fingerprint/g" external/extras/FDroidPriviledged/java/org/fdroid/fdroid/privileged/ClientWhitelist.java
+	sed -i "s/SHA256_FINGERPRINT/$fingerprint/g" external/extras/FDroidPriviledged/java/org/fdroid/fdroid/privileged/ClientWhitelist.java
 	
 If you skip this step, the priviledged extension will not accept your signed FDroid.
 
