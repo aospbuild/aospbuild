@@ -77,4 +77,3 @@ if [[ $DEVICE == hikey* ]]; then
 else
   source ../../device/common/generate-factory-images-common.sh
 fi
-
