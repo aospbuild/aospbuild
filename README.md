@@ -76,6 +76,8 @@ At the moment kernel version for 'marlin' is 514a3ff917ea
 	make marlin_defconfig
 	make -j20
 	mv arch/arm64/boot/Image.lz4-dtb ../device/google/marlin-kernel/
+	unset ARCH
+	unset CROSS_COMPILE
 	cd ..
 	
 Clone this repo
