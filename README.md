@@ -50,7 +50,7 @@ For Pixel 2 (XL)
 	../../development/tools/make_key shared '/C=US/ST=Some-State/L=Some-City/O=Aosp/OU=Aosp/CN=Aosp/emailAddress=user@host.com'
 	../../development/tools/make_key media '/C=US/ST=Some-State/L=Some-City/O=Aosp/OU=Aosp/CN=Aosp/emailAddress=user@host.com'
 	openssl genrsa -out avb.pem 2048
-	../../external/avb/avbtool extract_public_key --key avb.pem --output 
+	../../external/avb/avbtool extract_public_key --key avb.pem --output avb_pkmd.bin
 	cd ../..
 	
 avb_pkmd.bin will be needed for flashing
@@ -116,6 +116,21 @@ Building
 	choosecombo release aosp_marlin user
 	make -j20 brillo_update_payload && make target-files-package -j24 && script/release.sh marlin
 	
-	
-	
-	
+When finished, you will find both factory image and OTA update package in out/release-marlin-$BUILD_NUMBER .
+
+Installing
+- tar xvf marlin-factory-$BUILD_NUMBER.tar.gz
+- cd marlin-opm4.171019.016.b1
+- reboot device in fastboot
+- fastboot flashing unlock (also fastboot flashing unlock_critical for Pixel 2 XL)
+- ./flash-all.sh
+- for Pixel 2 and Pixel 2 XL only: fastboot flash avb_custom_key avb_pkmd.bin (generated earlier)
+- fastboot flashing lock_critical (Pixel 2 XL)
+- fastboot flashing lock
+
+Upgrading
+- Reboot device in recovery mode
+- Select "Apply update from ADB"
+- adb sideload marlin-ota_update-$BUILD_NUMBER.zip
+
+
