@@ -51,9 +51,30 @@ For Pixel 2 (XL)
 	../../development/tools/make_key media '/C=US/ST=Some-State/L=Some-City/O=Aosp/OU=Aosp/CN=Aosp/emailAddress=user@host.com'
 	openssl genrsa -out avb.pem 2048
 	../../external/avb/avbtool extract_public_key --key avb.pem --output 
-	cd ../.
+	cd ../..
 	
 avb_pkmd.bin will be needed for flashing
 
 
+For Pixel 1 and Piexl 1 XL, verity_key must be included in the kernel, and the kernel rebuilt
+
+Download kernel source
+
+	git clone https://android.googlesource.com/kernel/msm
+
+Find the prebuilt kernel version
+
+	lz4cat device/google/marlin-kernel/Image.lz4-dtb | grep -a 'Linux version' | cut -d ' ' -f3 | cut -d'-' -f2 | sed 's/^g//g'
+	
+At the moment kernel version for 'marlin' is 514a3ff917ea
+
+	cd msm
+	git checkout 514a3ff917ea
+	openssl x509 -outform der -in ../keys/marlin/verity.x509.pem -out verity_user.der.x509
+	export ARCH=arm64
+	export CROSS_COMPILE=aarch64-linux-android-
+	make marlin_defconfig
+	make -j20
+	mv arch/arm64/boot/Image.lz4-dtb ../device/google/marlin-kernel/
+	cd ..
 	
